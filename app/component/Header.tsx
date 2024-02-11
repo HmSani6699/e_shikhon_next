@@ -1,6 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { FC, useState } from "react";
+import NavItems from "../utils/NavItems";
+import ThemesSwitcher from "../utils/ThemesSwitcher";
 
 type Props = {
   open: boolean;
@@ -8,7 +10,7 @@ type Props = {
   activeItem: number;
 };
 
-const Header: FC<Props> = (props) => {
+const Header: FC<Props> = ({ activeItem }) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -40,6 +42,10 @@ const Header: FC<Props> = (props) => {
               >
                 e-Shikhon
               </Link>
+            </div>
+            <div className="flex items-center">
+              <NavItems activeItem={activeItem} isMobile={false} />
+              <ThemesSwitcher />
             </div>
           </div>
         </div>
