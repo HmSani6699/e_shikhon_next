@@ -14,7 +14,7 @@ type VerifyNumber = {
   "3": string;
 };
 
-const Verification: FC<Props> = (setRoute) => {
+const Verification: FC<Props> = ({ setRoute }) => {
   const [invalidError, setInvalidError] = useState<boolean>(false);
   const inputRefs = [
     useRef<HTMLAnchorElement>(null),
@@ -31,7 +31,7 @@ const Verification: FC<Props> = (setRoute) => {
   });
 
   const verifictionHandler = async () => {
-    console.log("test");
+    setInvalidError(true);
   };
 
   const handleInputChange = (index: number, value: string) => {
@@ -45,6 +45,8 @@ const Verification: FC<Props> = (setRoute) => {
     }
   };
 
+  console.log(invalidError);
+
   return (
     <div>
       <h1 className={`${styles.title}`}>Verify Your Acount</h1>
@@ -56,10 +58,10 @@ const Verification: FC<Props> = (setRoute) => {
       </div>
       <br />
       <br />
-      <div className="1100px:w-[70%] m-auto flex items-center justify-around ">
+      <div className=" m-auto flex items-center justify-around ">
         {Object.keys(verifyNumber).map((key, index) => (
           <input
-            type="text"
+            type="number"
             key={key}
             ref={inputRefs[index]}
             className={`w-[65px] h-[65px] bg-transparent border-[3px] rounded-[10px] text-black dark:text-white justify-center text-[18px] font-Poppins outline-none text-center ${
@@ -67,9 +69,31 @@ const Verification: FC<Props> = (setRoute) => {
                 ? "shake border-red-500"
                 : "dark:border-white border-[#0000004a]"
             }`}
+            placeholder=""
+            maxLength={1}
+            value={verifyNumber[key as keyof VerifyNumber]}
+            onChange={(e) => handleInputChange(index, e.target.value)}
           />
         ))}
       </div>
+      <br />
+      <br />
+      <div className="w-full flex justify-center">
+        <button className={`${styles.button}`} onClick={verifictionHandler}>
+          Verify OTP
+        </button>
+      </div>
+      <br />
+      <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
+        Go back to dign in?{" "}
+        <span
+          className="text-[#2190ff] pl-1 cursor-pointer"
+          onClick={() => setRoute("Login")}
+        >
+          {" "}
+          Sign in
+        </span>
+      </h5>
     </div>
   );
 };
