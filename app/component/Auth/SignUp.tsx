@@ -28,8 +28,8 @@ const SignUp: FC<Props> = ({ setRoute }) => {
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },
     validationSchema: schema,
-    onSubmit: async ({ email, password }) => {
-      console.log(email, password);
+    onSubmit: async ({ name, email, password }) => {
+      setRoute("Verification");
     },
   });
 
