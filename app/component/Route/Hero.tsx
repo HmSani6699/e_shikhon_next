@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 import React, { FC } from "react";
 import { BiSearch } from "react-icons/bi";
 
@@ -7,7 +8,7 @@ type Props = {};
 const Hero: FC<Props> = (props) => {
   return (
     <div className="w-full 1000px:flex items-center">
-      <div className="absolute top-[100px] 1000px:top-[unset] 1500px:h-[700px] 1500px:w-[700px] 1100px:h-[600px] h-[50vh] w-[50vh] hero_animation rounded-full"></div>
+      <div className="absolute top-[100px] left-4 1000px:top-[unset] 1500px:h-[600px] 1500px:w-[600px] 1100px:h-[600px] h-[50vh] w-[50vh] hero_animation rounded-full"></div>
       <div className="1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10 ">
         <Image
           src={require("../../../public/banner-img-1.png")}
@@ -16,17 +17,17 @@ const Hero: FC<Props> = (props) => {
         />
       </div>
       <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
-        <h2 className="dark:text-white text-black text-[30px] px-3 w-full 1000px:text-[70px] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[600px]  ">
+        <h2 className="dark:text-white text-black text-[30px] px-3 w-full 1000px:text-[70px] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[700px] 1500px:ml-4 ">
           Imporve Your Online Learning Experience Better Instantly
         </h2>
         <br />
-        <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%] ">
+        <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[63%] 1100px:!w-[78%] ">
           We have 40k+ Online courses & 500K+ Online registered student. Find
           your desired Courses from them.
         </p>
         <br />
         <br />
-        <div className="1500px:w-[55%] 1100px:w-[78%] w-[90%] h-[50%] bg-transparent  relative ">
+        <div className="1500px:!w-[63%] 1100px:w-[78%] w-[90%] h-[50px] bg-transparent  relative ">
           <input
             type="search"
             placeholder="Search Courses..."
@@ -36,6 +37,38 @@ const Hero: FC<Props> = (props) => {
             <BiSearch className="text-white" size={30} />
           </div>
         </div>
+        <br />
+        <br />
+        <div className="1500px:!w-[63%] 1100px:w-[78%] w-[90%] flex items-center ">
+          <Image
+            src={require("../../../public/client-1.jpg")}
+            alt="client img"
+            className="rounded-full"
+          />
+          <Image
+            src={require("../../../public/client-2.jpg")}
+            alt="client img"
+            className="rounded-full -ml-[20px]"
+          />
+          <Image
+            src={require("../../../public/client-3.jpg")}
+            alt="client img"
+            className="rounded-full -ml-[20px]"
+          />
+          <p className="font-Josefin dark:text-[#edfff4] text-[#000000b3] 1000px:pl-3 text-[18px] font-[600]">
+            500K+ People already trusted us
+            <span>
+              {" "}
+              <Link
+                href={"/courses"}
+                className="dark:text-[#46e256] text-[crimson]"
+              >
+                View Courses
+              </Link>
+            </span>
+          </p>
+        </div>
+        <br />
       </div>
     </div>
   );
