@@ -17,10 +17,10 @@ type VerifyNumber = {
 const Verification: FC<Props> = ({ setRoute }) => {
   const [invalidError, setInvalidError] = useState<boolean>(false);
   const inputRefs = [
-    useRef<HTMLAnchorElement>(null),
-    useRef<HTMLAnchorElement>(null),
-    useRef<HTMLAnchorElement>(null),
-    useRef<HTMLAnchorElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
+    useRef<HTMLInputElement>(null),
   ];
 
   const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
