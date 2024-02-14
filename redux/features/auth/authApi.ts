@@ -49,7 +49,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { userLoggedIn, userRegistration } from './authSlice';
+import { userLoggedIn, userLoggedOut, userRegistration } from './authSlice';
 
 type RegistrationResponse = {
   message: string;
@@ -142,10 +142,27 @@ export const authApi = createApi({
         }
       },
     }),
+    logOut: builder.query({
+      query: () => ({
+        url: 'logout',
+        method: 'GET',
+        credentials:"include" as const,
+      }),
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userLoggedOut()
+          )
+        } catch (error: any) {
+          console.error(error);
+        }
+      },
+    }),
 
 
   }),
 });
 
-export const { useRegisterMutation, useActivationMutation,useLoginMutation,useSocialAuthMutation } = authApi;
+export const { useRegisterMutation, useActivationMutation,useLoginMutation,useSocialAuthMutation,useLogOutQuery } = authApi;
 
