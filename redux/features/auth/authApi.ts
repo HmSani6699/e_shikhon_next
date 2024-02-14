@@ -49,7 +49,7 @@
 
 
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import { userRegistration } from './authSlice';
+import { userLoggedIn, userRegistration } from './authSlice';
 
 type RegistrationResponse = {
   message: string;
@@ -92,8 +92,35 @@ export const authApi = createApi({
         },
       }),
     }),
+
+    login: builder.mutation({
+      query: ({ email, password }) => ({
+        url: 'login',
+        method: 'POST',
+        body: {
+          email,
+          password,
+        },
+        credentials:"include" as const,
+      }),
+        async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userLoggedIn({
+              accessToken: result.data.activationToken,
+              user:result.data.user,
+            })
+          );
+        } catch (error: any) {
+          console.error(error);
+        }
+      },
+    }),
+
+
   }),
 });
 
-export const { useRegisterMutation, useActivationMutation } = authApi;
+export const { useRegisterMutation, useActivationMutation,useLoginMutation } = authApi;
 
