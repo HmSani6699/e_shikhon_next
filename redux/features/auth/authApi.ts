@@ -1,47 +1,99 @@
-import { apiSlice } from "../api/apiSlice";
-import { userRegistration } from "./authSlice";
+// import { apiSlice } from "../api/apiSlice";
+// import { userRegistration } from "./authSlice";
+
+// type RegistrationResponse = {
+//     message: string;
+//     activationToken: string;
+// }
+
+// type RegistrationData = {};
+
+// export const authApi = apiSlice.injectEndpoints({
+//     endpoints: (builder) => ({
+//         register: builder.mutation<RegistrationResponse, RegistrationData>({
+//             query: (data) => ({
+//                 url: "registration",
+//                 method: "POST",
+//                 body: data,
+//                 credentials: "include" as const,
+//             }),
+//             async onQueryStarted(arg, { queryFulfilled, dispatch }) {
+//                 try {
+//                     const result = await queryFulfilled;
+//                     dispatch(
+//                         userRegistration({
+//                             token:result.data.activationToken,
+//                         })
+//                     )
+//                 } catch (error: any) {
+//                     console.log(error);
+//                 }
+//              }
+//         }),
+//         activation: builder.mutation({
+//              query: ({activation_token,activation_code}) => ({
+//                 url: "actiovation-user",
+//                 method: "POST",
+//                 body: {
+//                     activation_token,
+//                     activation_code,
+//                 }
+//             }),
+//         })
+//     }),
+// });
+
+
+// export const { useRegisterMutation,useActivationMutation} = authApi;
+
+
+
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { userRegistration } from './authSlice';
 
 type RegistrationResponse = {
-    message: string;
-    activationToken: string;
-}
+  message: string;
+  activationToken: string;
+};
 
 type RegistrationData = {};
 
-export const authApi = apiSlice.injectEndpoints({
-    endpoints: (builder) => ({
-        register: builder.mutation<RegistrationResponse, RegistrationData>({
-            query: (data) => ({
-                url: "registration",
-                method: "POST", 
-                body: data,
-                credentials: "include" as const,
-            }),
-            async onQueryStarted(arg, { queryFulfilled, dispatch }) {
-                try {
-                    const result = await queryFulfilled;
-                    dispatch(
-                        userRegistration({
-                            token:result.data.activationToken,
-                        })
-                    )
-                } catch (error: any) {
-                    console.log(error);  
-                }
-             }
-        }),
-        activation: builder.mutation({
-             query: ({activation_token,activation_code}) => ({
-                url: "actiovation-user",
-                method: "POST", 
-                body: {
-                    activation_token,
-                    activation_code,
-                }
-            }),
-        })
+export const authApi = createApi({
+  reducerPath: 'authApi',
+  baseQuery: fetchBaseQuery({ baseUrl: '/api' }), // Adjust baseURL as needed
+  endpoints: (builder) => ({
+    register: builder.mutation<RegistrationResponse, RegistrationData>({
+      query: (data) => ({
+        url: 'registration',
+        method: 'POST',
+        body: data,
+        credentials: 'include',
+      }),
+      async onQueryStarted(arg, { dispatch, queryFulfilled }) {
+        try {
+          const result = await queryFulfilled;
+          dispatch(
+            userRegistration({
+              token: result.data.activationToken,
+            })
+          );
+        } catch (error: any) {
+          console.error(error);
+        }
+      },
     }),
+    activation: builder.mutation({
+      query: ({ activation_token, activation_code }) => ({
+        url: 'activation-user',
+        method: 'POST',
+        body: {
+          activation_token,
+          activation_code,
+        },
+      }),
+    }),
+  }),
 });
 
+export const { useRegisterMutation, useActivationMutation } = authApi;
 
-export const { useRegisterMutation,useActivationMutation} = authApi;
