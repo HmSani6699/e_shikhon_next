@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import SideBarProfile from "./SideBarProfile";
 import { useLogOutQuery } from "@/redux/features/auth/authApi";
 import { signOut } from "next-auth/react";
-import { redirect } from "next/dist/server/api-utils";
+import ProfileInfo from "./ProfileInfo";
 
 type Props = {
   user: any;
@@ -16,9 +16,8 @@ const Profile: FC<Props> = ({ user }) => {
   const {} = useLogOutQuery(undefined, { skip: !logOut ? true : false });
 
   const logOutHandler = async () => {
-    signOut();
     setLogOut(true);
-    redirect("/");
+    await signOut();
   };
 
   if (typeof window !== "undefined") {
@@ -46,6 +45,11 @@ const Profile: FC<Props> = ({ user }) => {
           logouutHanmler={logOutHandler}
         />
       </div>
+      {active === 1 && (
+        <div className="w-full h-full bg-transparent mt-[80px] ">
+          <ProfileInfo avatar={avatar} user={user} />
+        </div>
+      )}
     </div>
   );
 };
