@@ -12,13 +12,21 @@ export const userApi = apiSlice.injectEndpoints({
         }),
         editProfile: builder.mutation({
             query: ({name}) => ({
-                url: "update-user-avatar",
+                url: "update-user-info",
                 method: "PUT",
                 body:{ name },
+            Credential:"incude" as const ,
+            })
+        }),
+        updateProfile: builder.mutation({
+            query: ({oldPassword,newPassword}) => ({
+                url: "update-user-password",
+                method: "PUT",
+                body:{ oldPassword,newPassword },
             Credential:"incude" as const ,
             })
         })
     })
 });
 
-export const { useUpdateAvatarMutation,useEditProfileMutation} = userApi;
+export const { useUpdateAvatarMutation,useEditProfileMutation,useUpdatePasswordMutation} = userApi;
