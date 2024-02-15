@@ -9,8 +9,16 @@ export const userApi = apiSlice.injectEndpoints({
                 body:{ avatar },
             Credential:"incude" as const ,
             })
+        }),
+        editProfile: builder.mutation({
+            query: ({name}) => ({
+                url: "update-user-avatar",
+                method: "PUT",
+                body:{ name },
+            Credential:"incude" as const ,
+            })
         })
     })
 });
 
-export const { useUpdateAvatarMutation} = userApi;
+export const { useUpdateAvatarMutation,useEditProfileMutation} = userApi;

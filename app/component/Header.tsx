@@ -107,7 +107,12 @@ const Header: FC<Props> = ({ activeItem, setOpen, open, route, setRoute }) => {
                   <Image
                     className="w-[30px] h-[30px] rounded-full"
                     alt=""
-                    src={user.avatar ? user.avatar : avatar}
+                    width={30}
+                    height={30}
+                    src={user.avatar ? user.avatar.url : avatar}
+                    style={{
+                      border: activeItem === 5 ? "2px solid #ffc107" : "none",
+                    }}
                   />
                 </Link>
               ) : (
