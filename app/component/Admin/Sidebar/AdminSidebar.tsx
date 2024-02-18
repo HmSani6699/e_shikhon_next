@@ -220,6 +220,90 @@ const Sidebar = () => {
             >
               - {!isCollapsed && "Customization"}
             </Typography>
+            <Item
+              title="Hero"
+              to="/admin/hero"
+              icon={<WebIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="FAQ"
+              to="/admin/faq"
+              icon={<QuizIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Categories"
+              to="/admin/categories"
+              icon={<WysiwygIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Typography
+              variant="h5"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Categories"}
+            </Typography>
+            <Item
+              title="Manage Team"
+              to="/admin/team"
+              icon={<PeopleOutlinedIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Typography
+              variant="h5"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Analytics"}
+            </Typography>
+            <Item
+              title="Courses Analytice"
+              to="/admin/courses_analytice"
+              icon={<BarChartOutlinedIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Orders Analytice"
+              to="/admin/orders_analytice"
+              icon={<MapOutlinedIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Users Analytice"
+              to="/admin/users_analytice"
+              icon={<ManageHistoryIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Typography
+              variant="h6"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[18px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Extras"}
+            </Typography>
+            <Item
+              title="Settings"
+              to="/admin/settings"
+              icon={<SettingsIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Logout"
+              to="/"
+              icon={<ExitToAppIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
           </Box>
         </Menu>
       </ProSidebar>
