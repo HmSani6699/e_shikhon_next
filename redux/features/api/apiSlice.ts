@@ -2,6 +2,8 @@ import {createApi, fetchBaseQuery } from "@reduxjs/toolkit/query";
 import { url } from "inspector";
 import { userLoggedIn } from "../auth/authSlice";
 
+
+
 export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({
@@ -40,3 +42,8 @@ export const apiSlice = createApi({
 });
 
 export const { useRefreshTokenQuery,useLoadUserQuery} = apiSlice;
+
+
+
+// ======>  ChatGPT  code <======//
+
