@@ -36,13 +36,7 @@ interface itemProps {
   setSeclected: any;
 }
 
-const AdminSidebar: FC<itemProps> = ({
-  title,
-  to,
-  icon,
-  selected,
-  setSeclected,
-}) => {
+const Item: FC<itemProps> = ({ title, to, icon, selected, setSeclected }) => {
   return (
     <MenuItem
       active={selected === title}
@@ -134,10 +128,74 @@ const Sidebar = () => {
               </Box>
             )}
           </MenuItem>
+          {isCollapsed && (
+            <Box mb="25px">
+              <Box display="flex" justifyContent="center" alignItems="center">
+                <Image
+                  alt="pofile-user"
+                  width={100}
+                  height={100}
+                  src={user.avatar ? user.avatar.url : avatarDefault}
+                  style={{
+                    cursor: "pointer",
+                    borderRadius: "50%",
+                    border: "3px solid #5b6fe6",
+                  }}
+                />
+              </Box>
+              <Box textAlign="center">
+                <Typography
+                  variant="h4"
+                  className="!text-[20px] text-black dark:text-[#ffffffc1] "
+                  sx={{ m: "10px 0 0 0 " }}
+                >
+                  {user?.name}
+                </Typography>
+                <Typography
+                  variant="h6"
+                  className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize "
+                  sx={{ m: "10px 0 0 0 " }}
+                >
+                  - {user?.role}
+                </Typography>
+              </Box>
+            </Box>
+          )}
+
+          <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            <Item
+              title="Dashboard"
+              to="/admin"
+              icon={<HomeOutlinedIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Typography
+              variant="h5"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Data"}
+            </Typography>
+            <Item
+              title="Users"
+              to="/admin/users"
+              icon={<GroupsIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Invoices"
+              to="/admin/invoices"
+              icon={<ReceiptOutlinedIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+          </Box>
         </Menu>
       </ProSidebar>
     </Box>
   );
 };
 
-export default AdminSidebar;
+export default Sidebar;
