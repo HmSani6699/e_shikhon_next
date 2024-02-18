@@ -191,6 +191,35 @@ const Sidebar = () => {
               selected={selected}
               setSeclected={setSelected}
             />
+            <Typography
+              variant="h5"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Content"}
+            </Typography>
+            <Item
+              title="Create Course"
+              to="/admin/create-course"
+              icon={<VideoCallIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+            <Item
+              title="Live Courses"
+              to="/admin/courses"
+              icon={<OndemandVideoIcon />}
+              selected={selected}
+              setSeclected={setSelected}
+            />
+
+            <Typography
+              variant="h5"
+              sx={{ m: "15px 0 5px 25px " }}
+              className="!text-[20px] text-black dark:text-[#ffffffc1] capitalize !font-[400] "
+            >
+              - {!isCollapsed && "Customization"}
+            </Typography>
           </Box>
         </Menu>
       </ProSidebar>
