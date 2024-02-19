@@ -70,6 +70,72 @@ const CourseInformation: FC<Props> = ({
               className={`${styles.input}`}
             />
           </div>
+          <div className="w-[45%]">
+            <label htmlFor="">Estimated Price (optional)</label>
+            <input
+              type="number"
+              name=""
+              id="price"
+              required
+              value={courseInfo.estimatedPrice}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, estimatedPrice: e.target.value })
+              }
+              placeholder="29"
+              className={`${styles.input}`}
+            />
+          </div>
+        </div>
+        <br />
+        <div>
+          <label htmlFor="email" className={`${styles.label}`}>
+            Course Tags
+          </label>
+          <input
+            type="text"
+            name=""
+            id="tags"
+            required
+            value={courseInfo.tags}
+            onChange={(e: any) =>
+              setCourseInfo({ ...courseInfo, tags: e.target.value })
+            }
+            placeholder="MERN,NEXT 13"
+            className={`${styles.input}`}
+          />
+        </div>
+        <br />
+        <div className="w-full flex justify-between">
+          <div className="w-[45%]">
+            <label htmlFor="">Course Label</label>
+            <input
+              type="text"
+              name=""
+              id="lavel"
+              required
+              value={courseInfo.level}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, level: e.target.value })
+              }
+              placeholder="Biginner/Expert"
+              className={`${styles.input}`}
+            />
+          </div>
+          <div className="w-[45%]">
+            <label htmlFor="">Demo Url</label>
+            <input
+              type="text"
+              name=""
+              id="demoUrl"
+              required
+              value={courseInfo.demoUrl}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, demoUrl: e.target.value })
+              }
+              placeholder="eer74fd"
+              className={`${styles.input}`}
+            />
+          </div>
         </div>
       </form>
     </div>
