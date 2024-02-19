@@ -3,7 +3,9 @@ import React, { useState } from "react";
 import CourseInformation from "./CourseInformation";
 import CourseOptions from "./CourseOptions";
 
-const CreateCourse = () => {
+type Props = {};
+
+const CreateCourse = (props: Props) => {
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
