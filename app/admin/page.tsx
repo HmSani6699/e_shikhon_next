@@ -3,6 +3,7 @@ import React, { FC } from "react";
 import Heading from "../utils/Heading";
 import AdminSidebar from "../component/Admin/Sidebar/AdminSidebar";
 import AdminProtected from "../hooks/adminProtected";
+import DashboardHero from "../component/Admin/DashboardHero";
 
 type Props = {};
 
@@ -20,7 +21,9 @@ const page: FC<Props> = () => {
           <div className="1500px:w-[16%] w-1/2">
             <AdminSidebar />
           </div>
-          <div className="w[85%]"></div>
+          <div className="w[85%]">
+            <DashboardHero />
+          </div>
         </div>
       </AdminProtected>
     </div>
