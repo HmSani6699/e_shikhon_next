@@ -1,3 +1,4 @@
+import { styles } from "@/app/styles/style";
 import React, { FC, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
@@ -44,6 +45,25 @@ const CourseContent: FC<Props> = ({
                   showSectionInput ? "mt-10" : "mb-0"
                 }`}
               >
+                {showSectionInput && (
+                  <>
+                    <input
+                      type="text"
+                      className={`text-[20px] ${
+                        item.videoSection === "Untitled Section"
+                          ? "w-[170px]"
+                          : "w-max"
+                      } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none `}
+                      value={item.videoSection}
+                      onChange={(e) => {
+                        const updateData = [...courseContentData];
+                        updateData[index].videoSection = e.target.value;
+                        setCourseContentData(updateData);
+                      }}
+                      placeholder="eer74fd"
+                    />
+                  </>
+                )}
                 <div className="flex w-full items-center justify-between my-0">
                   {isCollapsed[index] ? (
                     <>
@@ -82,6 +102,13 @@ const CourseContent: FC<Props> = ({
                     />
                   </div>
                 </div>
+                {!isCollapsed[index] && (
+                  <>
+                    <div className="my-3">
+                      <label className={styles.label}> Vedio Title</label>
+                    </div>
+                  </>
+                )}
               </div>
             </>
           );
