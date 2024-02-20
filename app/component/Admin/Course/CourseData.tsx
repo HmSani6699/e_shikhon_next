@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/style";
 import React, { FC } from "react";
 import AddCrileIcone from "@mui/icons-material/AddCircle";
+import toast from "react-hot-toast";
 
 type Props = {
   benefits: { title: string }[];
@@ -38,8 +39,19 @@ const CourseData: FC<Props> = ({
     setPrerequisites([...prerequisites, { title: "" }]);
   };
 
-  const prevButton = () => {};
-  const handleOptions = () => {};
+  const prevButton = () => {
+    setActive(active - 1);
+  };
+  const handleOptions = () => {
+    if (
+      benefits[benefits.length - 1]?.title !== "" &&
+      prerequisites[prerequisites.length - 1]?.title !== ""
+    ) {
+      setActive(active + 1);
+    } else {
+      toast.error("Please fil the fileds go to next");
+    }
+  };
 
   return (
     <div className="w-[80%] m-auto mt-24 block">
