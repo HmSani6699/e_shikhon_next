@@ -1,7 +1,8 @@
 import { styles } from "@/app/styles/style";
 import React, { FC, useState } from "react";
-import { AiOutlineDelete } from "react-icons/ai";
-import { BsPencil } from "react-icons/bs";
+import toast from "react-hot-toast";
+import { AiOutlineDelete, AiOutlinePlusCircle } from "react-icons/ai";
+import { BsLink45Deg, BsPencil } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 type Props = {
@@ -37,6 +38,91 @@ const CourseContent: FC<Props> = ({
     const updateData = [...courseContentData];
     updateData[index].links.splice(linkIndex, 1);
     setCourseContentData(updateData);
+  };
+
+  const handleAddLink = (index: number) => {
+    const updateData = [...courseContentData];
+    updateData[index].links.push({ title: "", url: "" });
+    setCourseContentData(updateData);
+  };
+
+  const newContentHandler = (item: any) => {
+    if (
+      item.title === "" ||
+      item.description === "" ||
+      item.links[0].title === "" ||
+      item.links[0].url === ""
+    ) {
+      toast.error("Please fill all the fields first!");
+    } else {
+      let newVideoSection = "";
+      if (courseContentData.length > 0) {
+        const lastVideoSection =
+          courseContentData[courseContentData.length - 1].videoSection;
+        if (lastVideoSection) {
+          newVideoSection = lastVideoSection;
+        }
+      }
+      const newContent = {
+        videoUrl: "",
+        title: "",
+        description: "",
+        videoSection: newVideoSection,
+        likks: [
+          {
+            title: "",
+            url: "",
+          },
+        ],
+      };
+      setCourseContentData([...courseContentData, newContent]);
+    }
+  };
+
+  const addNewSection = () => {
+    if (
+      courseContentData[courseContentData.length - 1].title === "" ||
+      courseContentData[courseContentData.length - 1].description === "" ||
+      courseContentData[courseContentData.length - 1].videoUrl === "" ||
+      courseContentData[courseContentData.length - 1].links[0].title === "" ||
+      courseContentData[courseContentData.length - 1].links[0].url === ""
+    ) {
+      toast.error("Plese fill all the fields first");
+    } else {
+      setActiveSection(activeSection + 1);
+      const newContent = {
+        videoUrl: "",
+        title: "",
+        description: "",
+        videoSection: `Untitled Section ${activeSection}`,
+        likks: [
+          {
+            title: "",
+            url: "",
+          },
+        ],
+      };
+      setCourseContentData([...courseContentData, newContent]);
+    }
+  };
+
+  const prevButton = () => {
+    setActive(active - 1);
+  };
+
+  const handleOptions = () => {
+    if (
+      courseContentData[courseContentData.length - 1].title === "" ||
+      courseContentData[courseContentData.length - 1].description === "" ||
+      courseContentData[courseContentData.length - 1].videoUrl === "" ||
+      courseContentData[courseContentData.length - 1].links[0].title === "" ||
+      courseContentData[courseContentData.length - 1].links[0].url === ""
+    ) {
+      toast.error("Section can't be empty");
+    } else {
+      setActive(active + 1);
+      handleCourseSubmit();
+    }
   };
 
   return (
@@ -158,8 +244,6 @@ const CourseContent: FC<Props> = ({
                         }}
                       />
                       <br />
-                      <br />
-                      <br />
                     </div>
                     {item?.links.map((link: any, linkIndex: number) => {
                       <div className="mb-3 block ">
@@ -206,13 +290,63 @@ const CourseContent: FC<Props> = ({
                         />
                       </div>;
                     })}
+                    <br />
+                    {/* add link button */}
+                    <div className="inline-block mb-4">
+                      <p
+                        className="flex items-center text-18px] dark:text-white text-black cursor-pointer "
+                        onClick={() => handleAddLink(index)}
+                      >
+                        <BsLink45Deg className="mr2" />
+                        Add Link
+                      </p>
+                    </div>
                   </>
+                )}
+                <br />
+                {/* add new content */}
+                {index === courseContentData.length - 1 && (
+                  <div>
+                    <p
+                      className="flex items-center text-18px] dark:text-white text-black cursor-pointer "
+                      onClick={() => newContentHandler(item)}
+                    >
+                      <AiOutlinePlusCircle className="mr2" />
+                      Add New Content
+                    </p>
+                  </div>
                 )}
               </div>
             </>
           );
         })}
+        <br />
+        <div
+          className="flex items-center text-[20px]  dark:text-white text-black cursor-pointer"
+          onClick={() => addNewSection()}
+        >
+          <AiOutlinePlusCircle className="mr-2" />
+          Add new Section
+        </div>
       </form>
+      <br />
+      <div className="w-full flex items-center justify-between ">
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-white rounded mt-8 cursor-pointer "
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-white rounded mt-8 cursor-pointer "
+          onClick={() => handleOptions()}
+        >
+          Next
+        </div>
+      </div>
+      <br />
+      <br />
+      <br />
     </div>
   );
 };
