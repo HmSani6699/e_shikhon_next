@@ -1,4 +1,6 @@
 import React, { FC, useState } from "react";
+import { AiOutlineDelete } from "react-icons/ai";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 type Props = {
   active: number;
@@ -21,6 +23,12 @@ const CourseContent: FC<Props> = ({
   const [activeSection, setActiveSection] = useState(1);
   const handleSubmit = (e: any) => {
     e.preventDefault();
+  };
+
+  const handleCollapseToggle = (index: number) => {
+    const updatedCollasped = [...isCollapsed];
+    updatedCollasped[index] = !updatedCollasped[index];
+    setIsCollapsed(updatedCollasped);
   };
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
@@ -51,6 +59,28 @@ const CourseContent: FC<Props> = ({
                     <div></div>
                   )}
                   {/* arrow button for collasped vedio content */}
+                  <div className="flex items-center">
+                    <AiOutlineDelete
+                      className={`dark:text-white text-[20px] mr-2 text-black ${
+                        index > 0 ? "cursor-pointer" : "cursor-no-drop"
+                      }`}
+                      onClick={() => {
+                        const updatedData = [...courseContentData];
+                        updatedData.splice(index, 1);
+                        setCourseContentData(updatedData);
+                      }}
+                    />
+                    <MdOutlineKeyboardArrowDown
+                      fontSize="large"
+                      className="dark:text-white text-black:"
+                      style={{
+                        transform: isCollapsed[index]
+                          ? "rotate(180deg)"
+                          : "rotate(0deg)",
+                      }}
+                      onClick={() => handleCollapseToggle(index)}
+                    />
+                  </div>
                 </div>
               </div>
             </>
