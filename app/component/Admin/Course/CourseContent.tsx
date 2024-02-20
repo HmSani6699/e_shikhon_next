@@ -1,6 +1,7 @@
 import { styles } from "@/app/styles/style";
 import React, { FC, useState } from "react";
 import { AiOutlineDelete } from "react-icons/ai";
+import { BsPencil } from "react-icons/bs";
 import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 
 type Props = {
@@ -31,6 +32,13 @@ const CourseContent: FC<Props> = ({
     updatedCollasped[index] = !updatedCollasped[index];
     setIsCollapsed(updatedCollasped);
   };
+
+  const handleRemoveLink = (index: number, linkIndex: number) => {
+    const updateData = [...courseContentData];
+    updateData[index].links.splice(linkIndex, 1);
+    setCourseContentData(updateData);
+  };
+
   return (
     <div className="w-[80%] m-auto mt-24 p-3">
       <form onSubmit={handleSubmit}>
@@ -47,21 +55,24 @@ const CourseContent: FC<Props> = ({
               >
                 {showSectionInput && (
                   <>
-                    <input
-                      type="text"
-                      className={`text-[20px] ${
-                        item.videoSection === "Untitled Section"
-                          ? "w-[170px]"
-                          : "w-max"
-                      } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none `}
-                      value={item.videoSection}
-                      onChange={(e) => {
-                        const updateData = [...courseContentData];
-                        updateData[index].videoSection = e.target.value;
-                        setCourseContentData(updateData);
-                      }}
-                      placeholder="eer74fd"
-                    />
+                    <div className="flex w-full items-center">
+                      <input
+                        type="text"
+                        className={`text-[20px] ${
+                          item.videoSection === "Untitled Section"
+                            ? "w-[170px]"
+                            : "w-min"
+                        } font-Poppins cursor-pointer dark:text-white text-black bg-transparent outline-none `}
+                        value={item.videoSection}
+                        onChange={(e) => {
+                          const updateData = [...courseContentData];
+                          updateData[index].videoSection = e.target.value;
+                          setCourseContentData(updateData);
+                        }}
+                      />
+                      <BsPencil className="cursor-pointer dark:text-white text-black" />
+                    </div>
+                    <br />
                   </>
                 )}
                 <div className="flex w-full items-center justify-between my-0">
@@ -106,7 +117,71 @@ const CourseContent: FC<Props> = ({
                   <>
                     <div className="my-3">
                       <label className={styles.label}> Vedio Title</label>
+                      <input
+                        type="text"
+                        placeholder="Projects Plan..."
+                        className={`${styles.input}`}
+                        value={item.title}
+                        onChange={(e) => {
+                          const updateData = [...courseContentData];
+                          updateData[index].title = e.target.value;
+                          setCourseContentData(updateData);
+                        }}
+                      />
                     </div>
+                    <div className="mb-3">
+                      <label className={styles.label}> Vedio Url</label>
+                      <input
+                        type="text"
+                        placeholder="sdder"
+                        className={`${styles.input}`}
+                        value={item.videoUrl}
+                        onChange={(e) => {
+                          const updateData = [...courseContentData];
+                          updateData[index].videoUrl = e.target.value;
+                          setCourseContentData(updateData);
+                        }}
+                      />
+                    </div>
+                    <div className="mb-3">
+                      <label className={styles.label}> Vedio Description</label>
+                      <textarea
+                        rows={8}
+                        cols={30}
+                        placeholder="sdder"
+                        className={`${styles.input} !h-min py-2`}
+                        value={item.description}
+                        onChange={(e) => {
+                          const updateData = [...courseContentData];
+                          updateData[index].description = e.target.value;
+                          setCourseContentData(updateData);
+                        }}
+                      />
+                      <br />
+                      <br />
+                      <br />
+                    </div>
+                    {item?.links.map((link: any, linkIndex: number) => {
+                      <div className="mb-3 block ">
+                        <div className="w-full flex items-center justify-center ">
+                          <label className={styles.label}>
+                            Link {linkIndex + 1}
+                          </label>
+                          <AiOutlineDelete
+                            className={`${
+                              linkIndex === 0
+                                ? "cursor-no-drop"
+                                : "cursor-pointer"
+                            } text-black dark:text-white text-[20px] `}
+                            onClick={() =>
+                              linkIndex === 0
+                                ? null
+                                : handleRemoveLink(index, linkIndex)
+                            }
+                          />
+                        </div>
+                      </div>;
+                    })}
                   </>
                 )}
               </div>
