@@ -163,7 +163,7 @@ const CourseContent: FC<Props> = ({
                     </div>
                     {item?.links.map((link: any, linkIndex: number) => {
                       <div className="mb-3 block ">
-                        <div className="w-full flex items-center justify-center ">
+                        <div className="w-full flex items-center justify-between ">
                           <label className={styles.label}>
                             Link {linkIndex + 1}
                           </label>
@@ -180,6 +180,30 @@ const CourseContent: FC<Props> = ({
                             }
                           />
                         </div>
+                        <input
+                          type="text"
+                          placeholder="Source Code... (Link title)"
+                          className={`${styles.input}`}
+                          value={link.title}
+                          onChange={(e) => {
+                            const updateData = [...courseContentData];
+                            updateData[index].links[linkIndex].title =
+                              e.target.value;
+                            setCourseContentData(updateData);
+                          }}
+                        />
+                        <input
+                          type="url"
+                          placeholder="Source Code... (Link URL)"
+                          className={`${styles.input} mt-6`}
+                          value={link.url}
+                          onChange={(e) => {
+                            const updateData = [...courseContentData];
+                            updateData[index].links[linkIndex].url =
+                              e.target.value;
+                            setCourseContentData(updateData);
+                          }}
+                        />
                       </div>;
                     })}
                   </>
