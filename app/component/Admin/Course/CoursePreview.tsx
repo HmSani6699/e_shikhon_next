@@ -24,6 +24,14 @@ const CoursePreview: FC<Props> = ({
 
   const discountPercentgePrice = discountPercentge.toFixed(0);
 
+  const prevButton = () => {
+    setActive(-1);
+  };
+
+  const createCourse = () => {
+    hanleCourseCreate();
+  };
+
   return (
     <div className="w-[90%] m-auto py-5 mb-5 ">
       <div className="w-full relative ">
@@ -106,6 +114,20 @@ const CoursePreview: FC<Props> = ({
         </div>
         <br />
         <br />
+      </div>
+      <div className="w-full flex items-center justify-between">
+        <div
+          className="w-full 800px:w-[100px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-white rounded mt-8 cursor-pointer "
+          onClick={() => prevButton()}
+        >
+          Prev
+        </div>
+        <div
+          className="w-full 800px:w-[100px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-white rounded mt-8 cursor-pointer "
+          onClick={() => createCourse()}
+        >
+          Create
+        </div>
       </div>
     </div>
   );
