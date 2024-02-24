@@ -13,14 +13,32 @@ const CoursePlayer: FC<Props> = ({ videoUrl }) => {
   });
 
   useEffect(() => {
-    axios.post(`${process.env.NEXT_PUblIC_API_URL}getVdoCipherOTP`, {
-      videoId: videoUrl,
-    });
-  });
+    axios
+      .post(`${process.env.NEXT_PUblIC_API_URL}getVdoCipherOTP`, {
+        videoId: videoUrl,
+      })
+      .then((res) => {
+        setVidoData(res.data);
+      });
+  }, [videoUrl]);
 
   return (
-    <div>
-      <h2>Course player</h2>
+    <div style={{ padding: "41%|", position: "relative" }}>
+      {videoData.otp && videoData.playbackInfo !== "" && (
+        <iframe
+          src={`https://player.vdocipher.com/v2/?otp=${videoData?.otp}&playbackInfo=${videoData.playbackInfo}&player=Ub90iZXIOeUXH0Nv`}
+          style={{
+            border: "0",
+            width: "90%",
+            height: "100%",
+            position: "absolute",
+            top: 0,
+            left: 0,
+          }}
+          allowFullScreen={true}
+          allow="encrypted-media"
+        ></iframe>
+      )}
     </div>
   );
 };
