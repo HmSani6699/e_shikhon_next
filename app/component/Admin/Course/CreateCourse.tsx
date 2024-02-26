@@ -17,7 +17,7 @@ const CreateCourse = (props: Props) => {
   useEffect(() => {
     if (isSuccess) {
       toast.success("Course create Successfully");
-      redirect("/admin/all-courses");
+      redirect("/admin/courses");
     }
     if (error) {
       if ("data" in error) {
@@ -92,7 +92,7 @@ const CreateCourse = (props: Props) => {
       totalVides: CourseContent.length,
       benefits: formettedBenefits,
       prerequisites: formattedPrerquisites,
-      courseContent: formattedCourseContentData,
+      courseData: formattedCourseContentData,
     };
 
     setCourseData(data);

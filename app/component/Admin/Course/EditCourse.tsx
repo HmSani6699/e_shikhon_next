@@ -19,6 +19,27 @@ const EditCourse: FC<Props> = ({ id }) => {
     { refetchOnMountOrArgChange: true }
   );
 
+  const editCourseData = data && data.courses.find((i: any) => i._id === id);
+
+  useEffect(() => {
+    if (editCourseData) {
+      setCourseInfo({
+        name: editCourseData.name,
+        description: editCourseData.description,
+        price: editCourseData.price,
+        estimatedPrice: editCourseData.estimatedPrice,
+        tags: editCourseData.tags,
+        thumbnail: editCourseData.thumbnail,
+        level: editCourseData.level,
+        demoUrl: editCourseData.demoUrl,
+      });
+
+      setBenefits(editCourseData.benefits);
+      setPrerequisites(editCourseData.prerequisites);
+      setCourseContentData(editCourseData.CourseData);
+    }
+  }, [editCourseData]);
+
   //   useEffect(() => {
   //     if (isSuccess) {
   //       toast.success("Course create Successfully");
