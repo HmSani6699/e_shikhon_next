@@ -4,7 +4,7 @@ import AdminProtected from "../../../app/hooks/adminProtected";
 import React from "react";
 import Heading from "../../../app/utils/Heading";
 import AdminSidebar from "../../component/Admin/Sidebar/AdminSidebar";
-import AllCourses from "../../component/Admin/Course/AllCourses";
+import AllUsers from "../../component/Admin/Users/AllUsers";
 
 type Props = {};
 
@@ -23,7 +23,7 @@ const page = () => {
           </div>
           <div className="w-[85%]">
             <DashboardHero />
-            <AllCourses />
+            <AllUsers isTeam={true} />
           </div>
         </div>
       </AdminProtected>

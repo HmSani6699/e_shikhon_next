@@ -1,18 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { AiOutlineDelete } from "react-icons/ai";
 import { useTheme } from "next-themes";
 import { FiEdit2 } from "react-icons/fi";
-import { useGetAllCoursesQuery } from "@/redux/features/courses/coursesApi";
+import {
+  useDeleteCoursesMutation,
+  useGetAllCoursesQuery,
+} from "@/redux/features/courses/coursesApi";
 import Loader from "../../Loader";
 import { format } from "timeago.js";
+import toast from "react-hot-toast";
 
 type Prorps = {};
 
 const AllCourses = () => {
   const { theme, setTheme } = useTheme();
-  const { isLoading, data, error } = useGetAllCoursesQuery({});
+  const [open, setOpen] = useState(false);
+  const [courseId, setCourseId] = useState("");
+  const { isLoading, data, refetch } = useGetAllCoursesQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
+  const [deleteCourse, { isSuccess, error }] = useDeleteCoursesMutation();
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.5 },
@@ -41,7 +51,12 @@ const AllCourses = () => {
       renderCell: (params: any) => {
         return (
           <>
-            <Button>
+            <Button
+              onClick={() => {
+                setOpen(!open);
+                setCourseId(params.row.id);
+              }}
+            >
               <AiOutlineDelete
                 className="dark:text-white text-black"
                 size={20}
@@ -67,6 +82,25 @@ const AllCourses = () => {
         });
       });
   }
+
+  useEffect(() => {
+    if (isSuccess) {
+      setOpen(false);
+      refetch();
+      toast.success("Course Delete Successfully");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+  }, [isSuccess, error]);
+
+  const handleDelete = async () => {
+    const id = courseId;
+    await deleteCourse(id);
+  };
 
   return (
     <div className="mt-[120px]">
@@ -128,6 +162,22 @@ const AllCourses = () => {
           >
             <DataGrid checkboxSelection rows={rows} columns={columns} />
           </Box>
+          {open && (
+            <Modal
+              open={open}
+              onClose={() => setOpen(!open)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box>
+                <h1>Are you sure you want to delete this user?</h1>
+                <div>
+                  <div>Cancel</div>
+                  <div onClick={handleDelete}>Delete</div>
+                </div>
+              </Box>
+            </Modal>
+          )}
         </Box>
       )}
     </div>

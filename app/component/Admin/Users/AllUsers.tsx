@@ -1,18 +1,23 @@
-import React from "react";
+import React, { FC, useState } from "react";
 import { DataGrid } from "@mui/x-data-grid";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { AiOutlineDelete, AiOutlineMail } from "react-icons/ai";
 import { useTheme } from "next-themes";
-import { FiEdit2 } from "react-icons/fi";
 import Loader from "../../Loader";
 import { format } from "timeago.js";
 import { useGetAllUsersQuery } from "@/redux/features/user/userApi";
+import { styles } from "@/app/styles/style";
 
-type Prorps = {};
+type Props = {
+  isTeam: boolean;
+};
 
-const AllUsers = () => {
+const AllUsers: FC<Props> = ({ isTeam }) => {
   const { theme, setTheme } = useTheme();
   const { isLoading, data, error } = useGetAllUsersQuery({});
+  const [active, setActive] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [userId, setUserId] = useState("");
 
   const columns = [
     { field: "id", headerName: "ID", flex: 0.3 },
@@ -28,7 +33,12 @@ const AllUsers = () => {
       renderCell: (params: any) => {
         return (
           <>
-            <Button>
+            <Button
+              onClick={() => {
+                setOpen(!open);
+                setUserId(params.row.id);
+              }}
+            >
               <AiOutlineDelete
                 className="dark:text-white text-black"
                 size={20}
@@ -61,9 +71,11 @@ const AllUsers = () => {
 
   const rows: any = [];
 
-  {
-    data &&
-      data.users.forEach((item: any) => {
+  if (isTeam) {
+    const newData =
+      data && data.users.filter((item: any) => item.role === "admin");
+    newData &&
+      newData.forEach((item: any) => {
         rows.push({
           id: item._id,
           name: item.name,
@@ -73,6 +85,20 @@ const AllUsers = () => {
           created_at: format(item.createdAt),
         });
       });
+  } else {
+    {
+      data &&
+        data.users.forEach((item: any) => {
+          rows.push({
+            id: item._id,
+            name: item.name,
+            email: item.email,
+            role: item.role,
+            courses: item.courses.length,
+            created_at: format(item.createdAt),
+          });
+        });
+    }
   }
 
   return (
@@ -81,6 +107,14 @@ const AllUsers = () => {
         <Loader />
       ) : (
         <Box m="20px">
+          <div className="w-full flex justify-end">
+            <div
+              className={`${styles.button} !w-[200px] dark:bg-[#57c7a3] !h-[35px] dark:border dark:border-[#ffffff6c] `}
+              onClick={() => setActive(!active)}
+            >
+              Add New Member
+            </div>
+          </div>
           <Box
             m="40px 0 0 0 "
             height="80vh"
@@ -135,6 +169,22 @@ const AllUsers = () => {
           >
             <DataGrid checkboxSelection rows={rows} columns={columns} />
           </Box>
+          {open && (
+            <Modal
+              open={open}
+              onClose={() => setOpen(!open)}
+              aria-labelledby="modal-modal-title"
+              aria-describedby="modal-modal-description"
+            >
+              <Box>
+                <h1>Are you sure you want to delete this user?</h1>
+                <div>
+                  <div>Cancel</div>
+                  <div>Delete</div>
+                </div>
+              </Box>
+            </Modal>
+          )}
         </Box>
       )}
     </div>
