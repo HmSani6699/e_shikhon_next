@@ -5,7 +5,10 @@ import CourseOptions from "./CourseOptions";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
-import { useGetAllCoursesQuery } from "../../../../redux/features/courses/coursesApi";
+import {
+  useEditcourseMutation,
+  useGetAllCoursesQuery,
+} from "../../../../redux/features/courses/coursesApi";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
 
@@ -14,7 +17,8 @@ type Props = {
 };
 
 const EditCourse: FC<Props> = ({ id }) => {
-  const { isLoading, data, refetch } = useGetAllCoursesQuery(
+  const [editCourse, { isSuccess, error }] = useEditcourseMutation();
+  const { data, refetch } = useGetAllCoursesQuery(
     {},
     { refetchOnMountOrArgChange: true }
   );
@@ -40,18 +44,18 @@ const EditCourse: FC<Props> = ({ id }) => {
     }
   }, [editCourseData]);
 
-  //   useEffect(() => {
-  //     if (isSuccess) {
-  //       toast.success("Course create Successfully");
-  //       redirect("/admin/all-courses");
-  //     }
-  //     if (error) {
-  //       if ("data" in error) {
-  //         const errorMessage = error as any;
-  //         toast.error(errorMessage.data.message);
-  //       }
-  //     }
-  //   }, [isSuccess, isLoading, error]);
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Course updated Successfully");
+      redirect("/admin/all-courses");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+  }, [isSuccess, error]);
 
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
@@ -127,6 +131,7 @@ const EditCourse: FC<Props> = ({ id }) => {
 
   const hanleCourseCreate = async (e: any) => {
     const data = courseData;
+    await editCourse({ id: editCourseData?._id, data });
   };
 
   return (
@@ -165,6 +170,7 @@ const EditCourse: FC<Props> = ({ id }) => {
             setActive={setActive}
             courseData={courseData}
             hanleCourseCreate={hanleCourseCreate}
+            isEdit={true}
           />
         )}
       </div>

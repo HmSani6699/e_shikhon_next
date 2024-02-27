@@ -9,6 +9,7 @@ type Props = {
   setActive: (active: number) => void;
   courseData: any;
   hanleCourseCreate: any;
+  isEdit: boolean;
 };
 
 const CoursePreview: FC<Props> = ({
@@ -16,6 +17,7 @@ const CoursePreview: FC<Props> = ({
   hanleCourseCreate,
   active,
   setActive,
+  isEdit,
 }) => {
   const discountPercentge =
     ((courseData?.estimatedPrice - courseData?.price) /
@@ -126,7 +128,7 @@ const CoursePreview: FC<Props> = ({
           className="w-full 800px:w-[100px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-white rounded mt-8 cursor-pointer "
           onClick={() => createCourse()}
         >
-          Create
+          {isEdit ? "Update" : "Create"}
         </div>
       </div>
     </div>
