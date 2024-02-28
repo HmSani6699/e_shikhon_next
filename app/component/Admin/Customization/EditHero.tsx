@@ -1,6 +1,10 @@
 import { styles } from "@/app/styles/style";
-import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import {
+  useEditLayoutMutation,
+  useGetHeroDataQuery,
+} from "@/redux/features/layout/layoutApi";
 import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast/headless";
 import { AiOutlineCamera } from "react-icons/ai";
 
 type Props = {};
@@ -9,9 +13,9 @@ const EditHero = () => {
   const [image, setImage] = useState("");
   const [title, setTitle] = useState("");
   const [subTitle, setSubTitle] = useState("");
-  const { data } = useGetHeroDataQuery("Banner", {
-    refetchOnMountOrArgChange: true,
-  });
+  const { data } = useGetHeroDataQuery("Banner");
+
+  const [editLayout, { isLoading, isSuccess, error }] = useEditLayoutMutation();
 
   useEffect(() => {
     if (data) {
@@ -19,7 +23,16 @@ const EditHero = () => {
       setSubTitle(data?.layout?.banner.subTitle);
       setImage(data?.layout?.banner?.image?.url);
     }
-  }, [data]);
+    if (isSuccess) {
+      toast.success("Hero updated successfully!");
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorData = error as any;
+        toast.error(errorData?.data?.message);
+      }
+    }
+  }, [data, isSuccess, error]);
 
   const handleUpdate = (type: any) => {};
 
