@@ -154,7 +154,15 @@ const CourseInformation: FC<Props> = ({
           </div>
           <div className="w-[45%]">
             <label htmlFor="">Course Categories</label>
-            <select name="" id="">
+            <select
+              name=""
+              id=""
+              className={`${styles.input}`}
+              value={courseInfo.category}
+              onChange={(e: any) =>
+                setCourseInfo({ ...courseInfo, category: e.target.value })
+              }
+            >
               <option value="">Select Category</option>
               {categories.map((item: any) => (
                 <option value={item.id} key={item.id}>
