@@ -15,7 +15,7 @@ import { useGetCoursesAnalyticsQuery } from "../../../../redux/features/analytic
 import { styles } from "@/app/styles/style";
 
 const CoursesAnalutics = () => {
-  const { data, isLoading, isError } = useGetCoursesAnalyticsQuery({});
+  const { data, isLoading } = useGetCoursesAnalyticsQuery({});
 
   //   const analyticsData = [
   //     { name: "jun", uv: 3 },
