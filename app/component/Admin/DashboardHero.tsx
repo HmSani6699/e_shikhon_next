@@ -1,6 +1,10 @@
 import DashboardHeader from "./DashboardHeader";
 
-const DashboardHero = () => {
+type Props = {
+  isDashboard?: boolean;
+};
+
+const DashboardHero = (props: Props) => {
   return (
     <div>
       <DashboardHeader />
